@@ -1,0 +1,61 @@
+<script setup>
+  import { useMutation, useQuery } from 'villus';
+  import { getProducts, addProducts } from '../graphql/Products'
+  import router from '../routes'
+
+  import { useUserStore } from '../store';
+  const tokenUser = useUserStore();
+
+  const addCart = async (id) => {
+    const { execute } = useMutation(addProducts, {
+      refetchTags: ['query'],
+      })
+      await execute({
+        userId: tokenUser.loggedId,
+        productId: id
+      }),
+      router.push({name: 'CartPage'})
+}
+  const { data } = useQuery({
+    query: getProducts,
+    tags: ['query']
+});
+</script>
+
+<template >
+  <div v-if="data" v-for="item in data.allProducts" class="q-pa-md row items-start q-gutter-md">
+    
+  <q-card class="my-card" flat bordered>
+    <q-img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Love_Coffee.jpg"/>
+
+    <q-card-section>
+      <div class="row no-wrap items-center">
+        <div class="col text-h6 ellipsis">
+          {{ item.title }}
+        </div>
+      </div>
+    </q-card-section>
+
+    <q-card-section class="q-pt-none">
+      <div class="text-subtitle1">
+        R$ {{ item.price }}
+      </div>
+    </q-card-section>
+
+    <q-separator />
+
+    <q-card-actions>
+      <q-btn flat round icon="add_shopping_cart"
+       @click="addCart(item.id)"/>
+      <q-btn flat color="primary" @click="router.push({name: 'Payment', params: {id: item.id}})">
+        Comprar agora
+      </q-btn>
+    </q-card-actions>
+  </q-card>
+  </div>
+</template>
+<style scoped>
+.my-card{
+  width: 20rem;
+}
+</style>
