@@ -12,7 +12,7 @@ const routes = [
   { path: '/menu', name: 'Menu' , component: Menu},
   { path: '/login', name: 'Login' , component: Login},
   { path: '/register', name: 'Register' , component: Register},
-  { path: '/payment/:id', name: 'Payment', component: Payment},
+  { path: '/payment/', name: 'Payment', component: Payment},
   { path: '/mycart', name: 'CartPage', component: CartPage}
 ]
 
