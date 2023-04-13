@@ -20,3 +20,19 @@ export const useUserStore = defineStore('userId', {
     enabled: true
   },
 })
+
+export const useCartStore = defineStore('userCart', {
+  state: () => ({
+      userCart: []
+  }),
+  actions:{
+    reset(){
+      this.userCart = ''
+    }
+  },
+  getters:{
+    getCart(state){
+      return state.userCart
+    }
+  }
+})
