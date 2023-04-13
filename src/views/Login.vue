@@ -38,7 +38,7 @@ const signIn = async (username, password) => {
       store.$patch({
         userId: data.value.loginUser.id
       })
-      router.push({name: 'CartPage'})
+      router.back()
     }else {
       $q.notify({
         type: 'negative',
