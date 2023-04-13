@@ -1,5 +1,18 @@
 <script setup> 
-  import router from '../routes';
+import router from '../routes';
+import { useUserStore } from '../store';
+
+const tokenUser = useUserStore();
+
+const userProfile = () => {
+  if(tokenUser.loggedId == null){
+    router.push({name: 'Login'})
+  }
+}
+const logout = () => {
+  tokenUser.$reset()
+  router.push({name: 'Login'})
+}
 
 </script>
 
@@ -16,7 +29,20 @@
 
             <div class="q-mr-xl">
               <q-btn no-caps icon="shopping_cart" @click="router.push({name: 'CartPage'})" flat/>
-              <q-btn no-caps icon="person" flat @click="router.push({name: 'Login'})" />
+              <q-btn-dropdown no-caps icon="person" flat @click="userProfile" >
+                <q-list>
+                  <q-item clickable v-close-popup @click="">
+                    <q-item-section>
+                      <q-item-label>Meu perfil</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                  <q-item clickable v-close-popup @click="logout">
+                    <q-item-section>
+                      <q-item-label>Sair</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </q-btn-dropdown>
             </div>
       </q-toolbar>
     </q-header>
@@ -29,5 +55,4 @@
 .container{
   height: 3rem
 }
-
 </style>
