@@ -14,6 +14,7 @@ const getUserProducts =  `
         title
         amount
         price
+        total
       }
     }
   }`
