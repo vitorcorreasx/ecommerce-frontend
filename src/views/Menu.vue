@@ -4,11 +4,10 @@ import Card from '../components/Card.vue';
 </script>
 
 <template>
-  <Header/>
+  <Header />
   <div class="row flex-center">
     <div class="row col-8 flex-center">
-      <Card/>
+      <Card />
     </div>
   </div>
-
 </template>

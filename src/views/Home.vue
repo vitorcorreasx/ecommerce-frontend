@@ -5,11 +5,9 @@ import preview from "../assets/preview.jpg"
 </script>
 
 <template>
-  <Header/>
+  <Header />
   <q-layout>
-    
+
   </q-layout>
 </template>
-<style>
-
-</style>
+<style></style>

@@ -12,7 +12,7 @@ import 'quasar/dist/quasar.css'
 
 import App from './App.vue'
 
-const client = createClient({url: API_ENDPOINT})
+const client = createClient({ url: API_ENDPOINT })
 const pinia = createPinia()
 const app = createApp(App)
 

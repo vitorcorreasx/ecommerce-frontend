@@ -19,14 +19,14 @@ const showPassword = () => {
 
 const signIn = async (username, password) => {
   const store = useUserStore()
-   await useQuery({
+  await useQuery({
     query: login,
-    variables:{
+    variables: {
       username: username,
       password: password
     },
-  }).then(({data}) => {
-    if(data.value === undefined){
+  }).then(({ data }) => {
+    if (data.value === undefined) {
       $q.notify({
         type: 'negative',
         message: 'Campos vazios!',
@@ -34,12 +34,12 @@ const signIn = async (username, password) => {
       })
       return
     }
-    if(data.value.loginUser){
+    if (data.value.loginUser) {
       store.$patch({
         userId: data.value.loginUser.id
       })
       router.back()
-    }else {
+    } else {
       $q.notify({
         type: 'negative',
         message: 'Credenciais inválidas!',
@@ -51,31 +51,24 @@ const signIn = async (username, password) => {
 </script>
 
 <template>
-  <Header/>
+  <Header />
   <q-layout class="column flex-center">
     <div class="container">
-    <q-form class="column" @submit="signIn(username, password)">
-      <q-input v-model="username" label="Usuario"/>
-      <q-input v-model="password" label="Senha" :type="type">
-        <template v-slot:append>
-          <q-icon
-            :name="visible"
-            class="cursor-pointer"
-            @click="showPassword"
-          />
-        </template>
-      </q-input>
-      <q-btn class="q-mt-sm q-mb-md text-right" type="submit" color="brown" label="Entrar"/>
-    </q-form>
-    <span>
-      Novo por aqui?
-      <q-btn label="Cadastre-se" @click="router.push({name: 'Register'})" no-caps flat class="text-primary"/>
-    </span>
-  </div>
+      <q-form class="column" @submit="signIn(username, password)">
+        <q-input v-model="username" label="Usuario" />
+        <q-input v-model="password" label="Senha" :type="type">
+          <template v-slot:append>
+            <q-icon :name="visible" class="cursor-pointer" @click="showPassword" />
+          </template>
+        </q-input>
+        <q-btn class="q-mt-sm q-mb-md text-right" type="submit" color="brown" label="Entrar" />
+      </q-form>
+      <span>
+        Novo por aqui?
+        <q-btn label="Cadastre-se" @click="router.push({ name: 'Register' })" no-caps flat class="text-primary" />
+      </span>
+    </div>
   </q-layout>
-
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

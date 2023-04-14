@@ -12,4 +12,4 @@ const register = `
     }
   }`
 
-  export {login, register}
+export { login, register }

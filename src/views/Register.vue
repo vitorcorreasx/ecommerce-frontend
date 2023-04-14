@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed} from 'vue'
+import { ref, computed } from 'vue'
 import { useMutation } from 'villus';
 import router from '../routes';
 import { register } from '../graphql/Auth'
@@ -20,28 +20,28 @@ const signUp = (username, password) => {
   const newUsername = username.trim()
   const newPassword = password.trim()
   const { execute } = useMutation(register)
-  if(newUsername && newPassword !== ''){
+  if (newUsername && newPassword !== '') {
     execute({
       username: newUsername,
       password: newPassword
-    }).then(({data}) => {
-        if(data.createUser == null){
-          $q.notify({
-            type: 'negative',
-            message: 'Usuário já existe!',
-            position: 'top-right'
-          })
-          return
-        }
-        if(data.createUser){
-          router.push({name: 'Login'})
-          $q.notify({
-            type: 'positive',
-            message: 'Cadastrado com sucesso',
-            position: 'top-right'
-          })
-        }
-      })
+    }).then(({ data }) => {
+      if (data.createUser == null) {
+        $q.notify({
+          type: 'negative',
+          message: 'Usuário já existe!',
+          position: 'top-right'
+        })
+        return
+      }
+      if (data.createUser) {
+        router.push({ name: 'Login' })
+        $q.notify({
+          type: 'positive',
+          message: 'Cadastrado com sucesso',
+          position: 'top-right'
+        })
+      }
+    })
   } else {
     $q.notify({
       type: 'negative',
@@ -53,29 +53,25 @@ const signUp = (username, password) => {
 </script>
 
 <template>
-  <Header/>
+  <Header />
   <q-layout class="column flex-center">
     <div class="container">
       <q-form class="column" @submit="signUp(username, password)">
-        <q-input :rules="[ val => val.length >= 5 || 'Por favor, minimo 5 caracteres']" v-model="username" label="Usuario"/>
-        <q-input v-model="password" label="Senha" :rules="[ val => val.length >= 5 || 'Por favor, mínimo 5 caractéres']" :type="pwdType">
+        <q-input :rules="[val => val.length >= 5 || 'Por favor, minimo 5 caracteres']" v-model="username"
+          label="Usuario" />
+        <q-input v-model="password" label="Senha" :rules="[val => val.length >= 5 || 'Por favor, mínimo 5 caractéres']"
+          :type="pwdType">
           <template v-slot:append>
-            <q-icon
-              :name="pwdVisible"
-              class="cursor-pointer"
-              @click="showPassword"
-            />
+            <q-icon :name="pwdVisible" class="cursor-pointer" @click="showPassword" />
           </template>
         </q-input>
-        <q-btn class="q-mt-md q-mb-md" type="submit" color="brown" label="Cadastrar"/>
+        <q-btn class="q-mt-md q-mb-md" type="submit" color="brown" label="Cadastrar" />
       </q-form>
       <span>Ja possui conta?
-        <q-btn  @click="router.push({name: 'Login'})" no-caps flat class="text-primary">Entre aqui!</q-btn>
+        <q-btn @click="router.push({ name: 'Login' })" no-caps flat class="text-primary">Entre aqui!</q-btn>
       </span>
     </div>
   </q-layout>
-
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

@@ -6,13 +6,13 @@ export const useUserStore = defineStore('userId', {
       userId: null
     }
   },
-  actions:{
-    reset(){
+  actions: {
+    reset() {
       this.userId = null
     }
   },
-  getters:{
-    loggedId(){
+  getters: {
+    loggedId() {
       return this.userId
     }
   },
@@ -23,16 +23,20 @@ export const useUserStore = defineStore('userId', {
 
 export const useCartStore = defineStore('userCart', {
   state: () => ({
-      userCart: []
+    userCart: [],
+    cartTotal: 0
   }),
-  actions:{
-    reset(){
+  actions: {
+    reset() {
       this.userCart = ''
     }
   },
-  getters:{
-    getCart(state){
+  getters: {
+    getCart(state) {
       return state.userCart
+    },
+    getTotalCart(state) {
+      return state.cartTotal
     }
-  }
+  },
 })

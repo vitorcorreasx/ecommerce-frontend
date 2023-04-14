@@ -6,7 +6,7 @@ const getProducts = `
       price
     }
   }`
-const getUserProducts =  `
+const getUserProducts = `
   query Query($userId: Int!){
     userProducts(userId: $userId) {
       products {
@@ -30,4 +30,4 @@ const removeProducts = `mutation removeProduct($userId: Int!, $productId: Int!) 
     }
   }`
 
-export {getProducts, getUserProducts, addProducts, removeProducts}
+export { getProducts, getUserProducts, addProducts, removeProducts }
