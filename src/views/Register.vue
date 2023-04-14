@@ -3,7 +3,6 @@ import { ref, computed} from 'vue'
 import { useMutation } from 'villus';
 import router from '../routes';
 import { register } from '../graphql/Auth'
-import { useUserStore } from '../store'
 import { useQuasar } from 'quasar';
 import Header from '../components/Header.vue';
 
@@ -13,13 +12,13 @@ const password = ref('')
 const isPwd = ref(true)
 const pwdVisible = computed(() => isPwd.value ? 'visibility_off' : 'visibility')
 const pwdType = computed(() => isPwd.value ? 'password' : 'text')
+
 const showPassword = () => {
   isPwd.value = !isPwd.value
 }
 const signUp = (username, password) => {
   const newUsername = username.trim()
   const newPassword = password.trim()
-  const store = useUserStore()
   const { execute } = useMutation(register)
   if(newUsername && newPassword !== ''){
     execute({
@@ -34,11 +33,8 @@ const signUp = (username, password) => {
           })
           return
         }
-        if(data.createUser.user_id){
-          store.$patch({
-              userId: data.createUser.user_id
-            })
-          router.push({name: 'CartPage'})
+        if(data.createUser){
+          router.push({name: 'Login'})
           $q.notify({
             type: 'positive',
             message: 'Cadastrado com sucesso',
