@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import router from '../routes';
-import { useQuery } from 'villus';
 
 import verify from '../assets/verify.png'
 
@@ -14,7 +13,8 @@ const cep = ref('')
 const neighborhood = ref('')
 const street = ref('')
 const houseNumber = ref('')
-const card = ref('')
+const name = ref('')
+const phone = ref('')
 
 const step = ref(1)
 const tab = ref('card')
