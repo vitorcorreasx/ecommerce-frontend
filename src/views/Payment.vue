@@ -1,6 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import router from '../routes';
+import { useQuery } from 'villus';
+
+import verify from '../assets/verify.png'
 
 import { useUserStore, useCartStore } from '../store';
 
@@ -11,9 +14,10 @@ const cep = ref('')
 const neighborhood = ref('')
 const street = ref('')
 const houseNumber = ref('')
+const card = ref('')
+
 const step = ref(1)
 const tab = ref('card')
-
 
 onMounted(() => {
   if (tokenUser.loggedId == null) {
@@ -21,9 +25,6 @@ onMounted(() => {
   }
 })
 
-const renderCard = () => {
-  visible.value = !visible.value
-}
 
 const searchCep = (cep) => {
   const url = `https://viacep.com.br/ws/${cep}/json/`
@@ -66,9 +67,10 @@ const searchCep = (cep) => {
         <div class="container row q-pl-xl justify-between">
           <div class="column">
             <span class="text-h5">Valor total do pedido: R$ {{ userCart.getTotalCart }}</span>
-            <div class="q-gutter-y-md table">
+
+            <div class="table q-mt-xl">
               <q-card>
-                <q-tabs v-model="tab" dense class="text-grey" active-color="primary" indicator-color="primary"
+                <q-tabs v-model="tab" dense class="text-grey" active-color="brown-10" indicator-color="brown-10"
                   align="justify" narrow-indicator>
                   <q-tab name="card" label="Cartão" />
                   <q-tab name="ticket" label="Boleto" />
@@ -79,20 +81,19 @@ const searchCep = (cep) => {
 
                 <q-tab-panels v-model="tab" animated>
                   <q-tab-panel name="card" class="row">
-                    <q-input class="col-6 q-mr-md" label="Número do Cartão" />
-                    <q-input class="col-5" label="CPF" />
-                    <q-input class="col-6 q-mr-md" label="Nome Títular" />
-                    <q-input label="CVC" />
+                    <q-input outlined class="col-6 q-mr-md q-mb-md" label="Número do Cartão" mask="#### #### #### ####" />
+                    <q-input outlined class="col-2 q-mr-md" label="CVC" mask="###" />
+                    <q-input outlined label="Validade (MM/AAAA)" mask="##/####" />
+                    <q-input outlined class="col-6 q-mr-md " label="Nome Títular" />
+                    <q-input outlined class="col-5" label="CPF" mask="###.###.###-##" />
                   </q-tab-panel>
 
                   <q-tab-panel name="ticket">
-                    <div class="text-h6">Alarms</div>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    <div class="text-h6">Opção não está disponível ainda!</div>
                   </q-tab-panel>
 
                   <q-tab-panel name="pix">
-                    <div class="text-h6">Movies</div>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    <div class="text-h6">Opção não está disponível ainda!</div>
                   </q-tab-panel>
                 </q-tab-panels>
               </q-card>
@@ -101,7 +102,13 @@ const searchCep = (cep) => {
         </div>
       </q-step>
 
-      <q-step :name="3" title="Compra finalizada!" icon="done" :done="step > 3" />
+      <q-step class="column items-center" :name="3" title="Compra finalizada!" icon="done" :done="step > 3">
+        <div class="column">
+          <q-img :src="verify" width="200px" />
+          <span class="text-h5 q-mt-lg">Compra finalizada!</span>
+        </div>
+
+      </q-step>
       <template v-slot:navigation>
         <q-stepper-navigation class="row justify-between">
           <q-btn v-if="step > 1" flat @click="$refs.stepper.previous()" label="Voltar" class="q-ml-sm text-brown-10" />
@@ -115,6 +122,7 @@ const searchCep = (cep) => {
     </q-stepper>
   </q-layout>
 </template>
+
 <style scoped>
 .input {
   width: 20%;
@@ -122,6 +130,6 @@ const searchCep = (cep) => {
 }
 
 .table {
-  width: 50vw;
+  width: 50rem;
 }
 </style>

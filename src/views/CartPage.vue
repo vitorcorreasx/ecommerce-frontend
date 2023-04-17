@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, reactive, onMounted, watch } from 'vue'
+import { ref, computed, reactive, onMounted } from 'vue'
 import { useQuasar } from 'quasar';
 import router from '../routes'
 import Header from '../components/Header.vue';
@@ -16,6 +16,7 @@ const tokenUser = useUserStore();
 const variables = reactive({
   userId: tokenUser.loggedId
 })
+
 const columns = ref([
   { name: 'title', required: true, label: 'Produto', align: 'left', field: 'title' },
   { name: 'price', align: 'center', label: 'Preço', field: 'price' },

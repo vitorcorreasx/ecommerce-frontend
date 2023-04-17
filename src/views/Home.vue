@@ -7,7 +7,7 @@ import preview from "../assets/preview.jpg"
 <template>
   <Header />
   <q-layout>
-
+    <q-img :src="preview" />
   </q-layout>
 </template>
 <style></style>
