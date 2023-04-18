@@ -13,17 +13,6 @@ const name = ref('')
 const valiteDate = ref('')
 const cvv = ref('')
 
-computed(() => {
-  userCard.userCard = {
-    number: cardNumber,
-    cpf: cpf,
-    name: name,
-    valiteDate: valiteDate,
-    cvv: cvv
-  }
-})
-console.log(userCard.userCard)
-
 </script>
 
 <template>
