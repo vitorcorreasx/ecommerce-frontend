@@ -10,7 +10,9 @@ import App from './App.vue';
 
 const app = createApp(App)
   .use(client)
-  .use(Quasar, { plugins: { Notify }, })
+  .use(Quasar, { 
+    plugins: { Notify }
+  })
   .use(router)
   .use(pinia);
 
