@@ -40,3 +40,19 @@ export const useCartStore = defineStore('userCart', {
     }
   },
 })
+
+export const useCardStore = defineStore('userCard', {
+  state: () => ({
+    userCard: [],
+  }),
+  actions: {
+    reset() {
+      this.userCard = ''
+    }
+  },
+  getters: {
+    getCard(state) {
+      return state.userCard
+    },
+  },
+})
