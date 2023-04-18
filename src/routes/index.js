@@ -1,11 +1,11 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router';
 
-import Home from '../views/Home.vue'
-import Menu from '../views/Menu.vue'
-import Payment from '../views/Payment.vue'
-import CartPage from '../views/CartPage.vue'
-import Login from '../views/Login.vue'
-import Register from '../views/Register.vue'
+import Home from '../views/HomePage.vue';
+import Menu from '../views/MenuPage.vue';
+import Payment from '../views/PaymentPage.vue';
+import CartPage from '../views/CartPage.vue';
+import Login from '../views/LoginPage.vue';
+import Register from '../views/RegisterPage.vue';
 
 const routes = [
   { path: '/', name: 'Home', component: Home },
@@ -14,10 +14,10 @@ const routes = [
   { path: '/register', name: 'Register', component: Register },
   { path: '/payment/:id', name: 'Payment', component: Payment },
   { path: '/mycart', name: 'CartPage', component: CartPage }
-]
+];
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
-})
+});
 export default router;

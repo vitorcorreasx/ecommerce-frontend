@@ -3,6 +3,7 @@ const getCardBalance = `
     getCard(cardInfos: $cardInfos) {
       balance
     }
-  }`
+  }
+`;
 
-export { getCardBalance }
+export { getCardBalance };

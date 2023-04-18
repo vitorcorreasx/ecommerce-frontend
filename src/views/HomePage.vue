@@ -1,6 +1,6 @@
 <script setup>
-import Header from "../components/Header.vue"
-import preview from "../assets/preview.jpg"
+import Header from '../components/HeaderBar.vue';
+import preview from '../assets/preview.jpg';
 
 </script>
 
@@ -10,4 +10,3 @@ import preview from "../assets/preview.jpg"
     <q-img :src="preview" />
   </q-layout>
 </template>
-<style></style>
