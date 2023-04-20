@@ -98,5 +98,3 @@ const signUp = (username, password) => {
     </div>
   </q-layout>
 </template>
-
-<style scoped></style>

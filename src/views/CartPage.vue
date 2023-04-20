@@ -32,23 +32,23 @@ onMounted(() => {
   }
 });
 
-const addCart = async (id) => {
+const addCart = async (productId) => {
   const { execute } = useMutation(addProducts, {
     refetchTags: ['query'],
   });
   await execute({
     userId: tokenUser.loggedId,
-    productId: id
+    productId
   });
 };
 
-const removeCart = async (id) => {
+const removeCart = async (productId) => {
   const { execute } = useMutation(removeProducts, {
     refetchTags: ['query'],
   });
   await execute({
     userId: tokenUser.loggedId,
-    productId: id
+    productId
   });
 };
 

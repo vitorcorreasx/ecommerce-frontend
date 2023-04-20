@@ -22,8 +22,8 @@ const signIn = async (username, password) => {
   await useQuery({
     query: login,
     variables: {
-      username: username,
-      password: password
+      username,
+      password
     },
   }).then(({ data }) => {
     if (!data.value) {
@@ -96,5 +96,3 @@ const signIn = async (username, password) => {
     </div>
   </q-layout>
 </template>
-
-<style scoped></style>
