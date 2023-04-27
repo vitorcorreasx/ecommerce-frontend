@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.16.1",
+    "@rollup/plugin-graphql": "^2.0.3",
     "dotenv": "^16.0.3",
+    "graphql": "^16.6.0",
     "pinia": "^2.0.33",
     "pinia-plugin-persist": "^1.0.0",
     "quasar": "^2.11.9",

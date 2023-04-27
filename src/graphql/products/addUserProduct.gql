@@ -1,0 +1,7 @@
+mutation addProduct($user:  ID!, $product: ID!){
+  addProduct(user: $user, product: $product) {
+    products {
+      amount
+    }
+  }
+}

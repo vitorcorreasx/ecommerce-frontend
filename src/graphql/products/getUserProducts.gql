@@ -1,0 +1,11 @@
+query userProducts($user: ID!){
+  userProducts(user: $user) {
+    products {
+      id
+      title
+      price
+      amount
+      total
+    }
+  }
+}

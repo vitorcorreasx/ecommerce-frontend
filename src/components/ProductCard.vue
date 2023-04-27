@@ -1,13 +1,14 @@
 <script setup>
 import { useMutation, useQuery } from 'villus';
-import { getProducts, addProducts } from '../graphql/Products';
+import getProducts from '../graphql/products/getProducts.gql';
+import addUserProduct from '../graphql/products/addUserProduct.gql';
 import router from '../routes';
 
 import { useUserStore } from '../store';
 const tokenUser = useUserStore();
 
 const addCart = async (product) => {
-  const { execute } = useMutation(addProducts, {
+  const { execute } = useMutation(addUserProduct, {
     refetchTags: ['query'],
   });
   await execute({

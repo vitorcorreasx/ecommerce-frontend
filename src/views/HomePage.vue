@@ -1,7 +1,6 @@
 <script setup>
 import Header from '../components/HeaderBar.vue';
 import preview from '../assets/preview.jpg';
-
 </script>
 
 <template>
