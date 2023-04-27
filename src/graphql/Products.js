@@ -8,28 +8,32 @@ const getProducts = `
   }
 `;
 const getUserProducts = `
-  query Query($userId: Int!){
+  query Query($userId: ID!){
     userProducts(userId: $userId) {
       products {
         id
         title
-        amount
         price
+        amount
         total
-      }
+      }  
     }
   }
 `;
 const addProducts = `
-  mutation addProduct($userId: Int!, $productId: Int!){
+  mutation addProduct($userId:  ID!, $productId: ID!){
     addProduct(userId: $userId, productId: $productId) {
-      id
+      products {
+        amount
+      }
     }
   }
 `;
-const removeProducts = `mutation removeProduct($userId: Int!, $productId: Int!) {
+const removeProducts = `mutation removeProduct($userId: ID!, $productId: ID!) {
     removeProduct(userId: $userId, productId: $productId) {
-      id
+      products {
+        amount
+      }
     }
   }
 `;
