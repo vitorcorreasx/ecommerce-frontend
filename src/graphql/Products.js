@@ -8,8 +8,8 @@ const getProducts = `
   }
 `;
 const getUserProducts = `
-  query Query($userId: ID!){
-    userProducts(userId: $userId) {
+  query Query($user: ID!){
+    userProducts(user: $user) {
       products {
         id
         title
@@ -21,16 +21,16 @@ const getUserProducts = `
   }
 `;
 const addProducts = `
-  mutation addProduct($userId:  ID!, $productId: ID!){
-    addProduct(userId: $userId, productId: $productId) {
+  mutation addProduct($user:  ID!, $product: ID!){
+    addProduct(user: $user, product: $product) {
       products {
         amount
       }
     }
   }
 `;
-const removeProducts = `mutation removeProduct($userId: ID!, $productId: ID!) {
-    removeProduct(userId: $userId, productId: $productId) {
+const removeProducts = `mutation removeProduct($user: ID!, $product: ID!) {
+    removeProduct(user: $user, product: $product) {
       products {
         amount
       }

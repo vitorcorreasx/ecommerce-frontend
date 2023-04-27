@@ -6,13 +6,13 @@ import router from '../routes';
 import { useUserStore } from '../store';
 const tokenUser = useUserStore();
 
-const addCart = async (id) => {
+const addCart = async (product) => {
   const { execute } = useMutation(addProducts, {
     refetchTags: ['query'],
   });
   await execute({
-    userId: tokenUser.loggedId,
-    productId: id
+    user: tokenUser.loggedId,
+    product
   }),
   router.push({ name: 'CartPage' });
 };

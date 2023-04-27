@@ -16,7 +16,7 @@ const userCart = useCartStore();
 const tokenUser = useUserStore();
 
 const variables = reactive({
-  userId: tokenUser.loggedId
+  user: tokenUser.loggedId
 });
 
 const columns = ref([
@@ -32,23 +32,23 @@ onMounted(() => {
   }
 });
 
-const addCart = async (productId) => {
+const addCart = async (product) => {
   const { execute } = useMutation(addProducts, {
     refetchTags: ['query'],
   });
   await execute({
-    userId: tokenUser.loggedId,
-    productId
+    user: tokenUser.loggedId,
+    product
   });
 };
 
-const removeCart = async (productId) => {
+const removeCart = async (product) => {
   const { execute } = useMutation(removeProducts, {
     refetchTags: ['query'],
   });
   await execute({
-    userId: tokenUser.loggedId,
-    productId
+    user: tokenUser.loggedId,
+    product
   });
 };
 
