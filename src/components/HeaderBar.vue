@@ -13,7 +13,6 @@ const logout = () => {
   tokenUser.$reset();
   router.push({ name: 'Login' });
 };
-
 </script>
 
 <template>
@@ -69,14 +68,6 @@ const logout = () => {
               <q-item
                 clickable
                 v-close-popup
-              >
-                <q-item-section>
-                  <q-item-label>Meu perfil</q-item-label>
-                </q-item-section>
-              </q-item>
-              <q-item
-                clickable
-                v-close-popup
                 @click="logout"
               >
                 <q-item-section>
@@ -90,11 +81,11 @@ const logout = () => {
     </q-header>
   </q-layout>
 </template>
+
 <style scoped>
 .navbar {
   width: 55%;
 }
-
 .container {
   height: 3rem
 }
