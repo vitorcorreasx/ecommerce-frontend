@@ -7,13 +7,13 @@ export const useUserStore = defineStore('userId', {
     };
   },
   actions: {
-    reset() {
-      this.userId = null;
+    reset(state) {
+      state.userId = null;
     }
   },
   getters: {
-    loggedId() {
-      return this.userId;
+    loggedId(state) {
+      return state.userId;
     }
   },
   persist: {

@@ -5,11 +5,10 @@ export const useCartStore = defineStore('userCart', {
     selectedCart: [],
     cartTotal: 0,
     cart: [],
-    totalAmount: 0,
   }),
   actions: {
-    reset() {
-      this.selectedCart = [];
+    reset(state) {
+      state.selectedCart = [];
     },
   },
   getters: {
