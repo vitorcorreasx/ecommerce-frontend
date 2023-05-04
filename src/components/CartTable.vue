@@ -1,23 +1,27 @@
 <!-- eslint-disable vue/no-side-effects-in-computed-properties -->
 <!-- eslint-disable vue/return-in-computed-property -->
 <script setup>
-import { ref, computed, reactive} from 'vue';
+import { ref, computed } from 'vue';
 import { useQuasar } from 'quasar';
 import router from '../routes';
-
 import { useQuery, useMutation } from 'villus';
 import getUserProducts from '../graphql/products/getUserProducts.gql';
-import removeUserProduct from '../graphql/products/removeUserProduct.gql';
-import addUserProduct from '../graphql/products/addUserProduct.gql';
+import updateUserProducts from '../graphql/products/updateUserProducts.gql';
 
 import { useUserStore, useCartStore } from '../store';
 
 const $q = useQuasar();
-const userCart = useCartStore();
+const cartStore = useCartStore();
 const tokenUser = useUserStore();
 
-const variables = reactive({
-  user: tokenUser.loggedId
+useQuery({
+  query: getUserProducts,
+  variables: {
+    userId: tokenUser.loggedId
+  },
+  tags: ['query']
+}).then(({data}) => {
+  cartStore.cart = data.value.userProducts;
 });
 
 const columns = ref([
@@ -27,30 +31,34 @@ const columns = ref([
   { name: 'total', align: 'center', label: 'Total', field: 'total' },
 ]);
 
-
-
-const addCart = async (product) => {
-  const { execute } = useMutation(addUserProduct, {
+const saveCart = () => {
+  const { execute } = useMutation(updateUserProducts, {
     refetchTags: ['query'],
-  });
-  await execute({
-    user: tokenUser.loggedId,
-    product
+  }); 
+  execute({
+    userId: tokenUser.loggedId,
+    input: cartStore.cart.products
   });
 };
 
-const removeCart = async (product) => {
-  const { execute } = useMutation(removeUserProduct, {
-    refetchTags: ['query'],
-  });
-  await execute({
-    user: tokenUser.loggedId,
-    product
-  });
+const addCart = async (productId) => {
+  const findProduct = cartStore.cart.products.findIndex(e => e.id == productId);
+  const item = cartStore.cart.products[findProduct];
+  item.amount++;
+  item.total = item.amount * item.price;
+};
+
+const removeCart = async (productId) => {
+  const findProduct = cartStore.cart.products.findIndex(e => e.id == productId);
+  const item = cartStore.cart.products[findProduct];
+  if(item.amount > 0){
+    item.amount--;
+  }
+  item.total = item.amount * item.price;
 };
 
 const finishCart = () => {
-  if (userCart.getCart != '') {
+  if (cartStore.getSelectedCart != '') {
     router.push({ name: 'Payment', params: { id: tokenUser.loggedId } });
     return;
   }
@@ -60,36 +68,27 @@ const finishCart = () => {
     position: 'top-right'
   });
 };
-
-const { data } = useQuery({
-  query: getUserProducts,
-  variables,
-  tags: ['query']
-});
-
 const getSelected = computed(() => {
   const sumPrice = ref(0);
   const sumAmount = ref(0);
-  if (userCart.getCart == '') {
-    userCart.cartTotal = 0;
+  if (cartStore.getSelectedCart == '') {
+    cartStore.cartTotal = 0;
     return;
   }
-  userCart.getCart.forEach(e => {
+  cartStore.getSelectedCart.forEach(e => {
     sumPrice.value = sumPrice.value + e.price;
     sumAmount.value = sumAmount.value + e.amount;
-    userCart.cartTotal = (sumPrice.value * sumAmount.value).toFixed(2);
+    cartStore.cartTotal = (sumPrice.value * sumAmount.value).toFixed(2);
   });
 });
-
 </script>
 
 <template>
   <div
     class="q-pa-md "
-    v-if="data"
   >
     <q-table
-      v-for="item in data.userProducts"
+      v-for="item in cartStore.cart"
       :key="item"
       flat
       bordered
@@ -99,7 +98,7 @@ const getSelected = computed(() => {
       row-key="title"
       :selected-rows-label="getSelected"
       selection="multiple"
-      v-model:selected="userCart.userCart"
+      v-model:selected="cartStore.selectedCart"
       rows-per-page-label="Produtos por página"
     >
       <template #body-cell-amount="props">
@@ -121,11 +120,19 @@ const getSelected = computed(() => {
   </div>
 
   <div class="column q-pa-md items-end">
-    <span class="q-mb-md text-h6">Total R$ {{ userCart.getTotalCart }}</span>
-    <q-btn
-      color="positive"
-      label="Finalizar compra"
-      @click="finishCart"
-    />
+    <span class="q-mb-md text-h6">Total R$ {{ cartStore.getTotalCart }}</span>
+    <div>
+      <q-btn
+        color="brown-10"
+        label="Salvar carrinho"
+        @click="saveCart"
+      />
+      <q-btn
+        class="q-ml-md"
+        color="positive"
+        label="Finalizar compra"
+        @click="finishCart"
+      />
+    </div>
   </div>
 </template>

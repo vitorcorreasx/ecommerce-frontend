@@ -2,21 +2,34 @@
 import { useMutation, useQuery } from 'villus';
 import getProducts from '../graphql/products/getProducts.gql';
 import addUserProduct from '../graphql/products/addUserProduct.gql';
+
 import router from '../routes';
 
-import { useUserStore } from '../store';
-const tokenUser = useUserStore();
+import { useUserStore, useCartStore} from '../store';
 
-const addCart = async (product) => {
+const tokenUser = useUserStore();
+const cartStore = useCartStore();
+
+const addProduct = async (product) => {
   const { execute } = useMutation(addUserProduct, {
     refetchTags: ['query'],
+  }); 
+  execute({
+    userId: tokenUser.loggedId,
+    input: {
+      id: product.id,
+      amount: 1,
+      title: product.title,
+      price: product.price,
+      total: product.price
+    }
+  }).then(({data})=>{
+    cartStore.cart = data.addUserProduct;
   });
-  await execute({
-    user: tokenUser.loggedId,
-    product
-  }),
-  router.push({ name: 'CartPage' });
+
+  router.push({ name: 'CartPage'});
 };
+
 const { data } = useQuery({
   query: getProducts,
   tags: ['query']
@@ -58,7 +71,7 @@ const { data } = useQuery({
           flat
           round
           icon="add_shopping_cart"
-          @click="addCart(item.id)"
+          @click="addProduct(item)"
         />
         <q-btn
           flat

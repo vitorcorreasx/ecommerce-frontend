@@ -1,7 +1,0 @@
-mutation removeProduct($user: ID!, $product: ID!) {
-  removeProduct(user: $user, product: $product) {
-    products {
-      amount
-    }
-  }
-}
