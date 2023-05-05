@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/no-side-effects-in-computed-properties -->
 <!-- eslint-disable vue/return-in-computed-property -->
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, reactive} from 'vue';
 import { useQuasar } from 'quasar';
 import router from '../routes';
 import { useQuery, useMutation } from 'villus';
@@ -69,16 +69,19 @@ const finishCart = () => {
   });
 };
 const getSelected = computed(() => {
-  const sumPrice = ref(0);
-  const sumAmount = ref(0);
+  const sum = reactive({
+    price: 0,
+    amount: 0
+  });
+
   if (cartStore.getSelectedCart.length == 0) {
     cartStore.cartTotal = 0;
     return;
   }
   cartStore.getSelectedCart.forEach(e => {
-    sumPrice.value = sumPrice.value + e.price;
-    sumAmount.value = sumAmount.value + e.amount;
-    cartStore.cartTotal = (sumPrice.value * sumAmount.value).toFixed(2);
+    sum.price = sum.price + e.price;
+    sum.amount = sum.amount + e.amount;
+    cartStore.cartTotal = (sum.price * sum.amount).toFixed(2);
   });
 });
 </script>
