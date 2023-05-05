@@ -60,7 +60,7 @@ const cvv = ref('');
                 class="col-6 q-mr-md q-mb-md"
                 label="Número do Cartão"
                 mask="#### #### #### ####"
-                :rules="[val => val && val.length > 0 || 'Digite um múmero de cartão válido']"
+                :rules="[val => val && val.length > 0 || 'Digite um número de cartão válido']"
               />
               <q-input
                 v-model="cvv"
