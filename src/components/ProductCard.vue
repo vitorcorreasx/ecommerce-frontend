@@ -2,15 +2,13 @@
 import { useMutation, useQuery } from 'villus';
 import getProducts from '../graphql/products/getProducts.gql';
 import addUserProduct from '../graphql/products/addUserProduct.gql';
-
 import router from '../routes';
-
 import { useUserStore, useCartStore} from '../store';
 
 const tokenUser = useUserStore();
 const cartStore = useCartStore();
 
-const addProduct = async (product) => {
+const addProduct = (product) => {
   const { execute } = useMutation(addUserProduct, {
     refetchTags: ['query'],
   }); 
@@ -23,10 +21,9 @@ const addProduct = async (product) => {
       price: product.price,
       total: product.price
     }
-  }).then(({data})=>{
+  }).then(({ data }) => {
     cartStore.cart = data.addUserProduct;
   });
-
   router.push({ name: 'CartPage'});
 };
 
@@ -76,7 +73,12 @@ const { data } = useQuery({
         <q-btn
           flat
           color="primary"
-          @click="router.push({ name: 'Payment', params: { id: item.id } })"
+          @click="router.push({ 
+            name: 'Payment',
+            params: {
+              id: item.id 
+            } 
+          })"
           label="Comprar agora"
         />
       </q-card-actions>

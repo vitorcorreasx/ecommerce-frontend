@@ -58,7 +58,7 @@ const removeCart = async (productId) => {
 };
 
 const finishCart = () => {
-  if (cartStore.getSelectedCart != '') {
+  if (cartStore.getSelectedCart.length != 0) {
     router.push({ name: 'Payment', params: { id: tokenUser.loggedId } });
     return;
   }
@@ -71,7 +71,7 @@ const finishCart = () => {
 const getSelected = computed(() => {
   const sumPrice = ref(0);
   const sumAmount = ref(0);
-  if (cartStore.getSelectedCart == '') {
+  if (cartStore.getSelectedCart.length == 0) {
     cartStore.cartTotal = 0;
     return;
   }
