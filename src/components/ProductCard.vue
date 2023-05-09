@@ -5,7 +5,7 @@ import addUserProduct from '../graphql/products/addUserProduct.gql';
 import router from '../routes';
 import { useUserStore, useCartStore} from '../store';
 
-const tokenUser = useUserStore();
+const userId = useUserStore();
 const cartStore = useCartStore();
 
 const addProduct = (product) => {
@@ -13,15 +13,16 @@ const addProduct = (product) => {
     refetchTags: ['query'],
   }); 
   execute({
-    userId: tokenUser.loggedId,
+    userId: userId.loggedId,
     input: {
-      productId: product.id,
+      id: product.id,
       amount: 1,
       title: product.title,
       price: product.price,
       total: product.price
     }
   }).then(({ data }) => {
+    console.log(data);
     cartStore.cart = data.addUserProduct;
   });
   router.push({ name: 'CartPage'});

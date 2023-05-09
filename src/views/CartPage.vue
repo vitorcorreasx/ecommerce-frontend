@@ -10,7 +10,7 @@ import updateUserProducts from '../graphql/products/updateUserProducts.gql';
 import Header from '../components/HeaderBar.vue';
 import CartTable from '../components/CartTable.vue';
 
-const tokenUser = useUserStore();
+const userId = useUserStore();
 const cartStore = useCartStore();
 const $q = useQuasar();
 const selectedCart = ref([]);
@@ -24,14 +24,14 @@ const columns = [
 ];
 
 onMounted(() => {
-  if (tokenUser.loggedId == null) {
+  if (userId.loggedId == null) {
     return router.push({ name: 'Login' });
   }
 });
 useQuery({
   query: getUserProducts,
   variables: {
-    userId: tokenUser.loggedId
+    userId: userId.loggedId
   },
   tags: ['query']
 }).then(({data}) => {
@@ -45,14 +45,14 @@ const saveCart = () => {
     refetchTags: ['query'],
   }); 
   execute({
-    userId: tokenUser.loggedId,
+    userId: userId.loggedId,
     input: cartStore.cart.products
   });
 };
 
 const finishCart = () => {
   if (selectedCart.value.length != 0) {
-    router.push({ name: 'Payment', params: { id: tokenUser.loggedId } });
+    router.push({ name: 'Payment', params: { id: userId.loggedId } });
     return;
   }
   $q.notify({

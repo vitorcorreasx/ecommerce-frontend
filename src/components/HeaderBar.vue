@@ -2,15 +2,9 @@
 import router from '../routes';
 import {useUserStore} from '../store/';
 
-const tokenUser = useUserStore();
-
-const userProfile = () => {
-  if (!tokenUser.loggedId) {
-    router.push({ name: 'Login' });
-  }
-};
+const userId = useUserStore();
 const logout = () => {
-  tokenUser.$reset();
+  userId.$reset();
   router.push({ name: 'Login' });
 };
 </script>
@@ -37,21 +31,19 @@ const logout = () => {
         <div class="row-button">
           <q-btn
             no-caps
-            class="q-mr-md"
             label="Home"
             flat
             @click="router.push({ name: 'Home' })"
           />
           <q-btn
             no-caps
-            class="q-mr-xl"
             label="Menu"
             flat
             @click="router.push({ name: 'Menu' })"
           />
         </div>
 
-        <div class="q-mr-xl">
+        <div>
           <q-btn
             no-caps
             icon="shopping_cart"
