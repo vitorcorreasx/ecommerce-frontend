@@ -24,10 +24,9 @@ export const useCartStore = defineStore('userCart', {
     decrementProduct(productId){
       const findProduct = this.cart.products.findIndex(e => e.id == productId);
       const item = this.cart.products[findProduct];
-      if(item.amount ==  1){
-        this.cart.products.splice(findProduct, 1);
+      if(item.amount > 0){
+        item.amount--;
       }
-      item.amount--;
       item.total = item.amount * item.price;
     }
   },

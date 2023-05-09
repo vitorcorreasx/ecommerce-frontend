@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, onMounted } from 'vue';
+import { onMounted } from 'vue';
 import router from '../routes';
 import { useQuasar } from 'quasar';
 import { useQuery, useMutation } from 'villus';
@@ -13,8 +13,6 @@ import CartTable from '../components/CartTable.vue';
 const userId = useUserStore();
 const cartStore = useCartStore();
 const $q = useQuasar();
-const selectedCart = ref([]);
-watch(selectedCart, () => cartStore.getTotal(selectedCart.value));
 
 const columns = [
   { name: 'title', required: true, label: 'Produto', align: 'left', field: 'title' },
@@ -38,8 +36,6 @@ useQuery({
   cartStore.cart = data.value.userProducts;
 });
 
-
-
 const saveCart = () => {
   const { execute } = useMutation(updateUserProducts, {
     refetchTags: ['query'],
@@ -51,7 +47,7 @@ const saveCart = () => {
 };
 
 const finishCart = () => {
-  if (selectedCart.value.length != 0) {
+  if (cartStore.cartPriceTotal != 0) {
     router.push({ name: 'Payment', params: { id: userId.loggedId } });
     return;
   }

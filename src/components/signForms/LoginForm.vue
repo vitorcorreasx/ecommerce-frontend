@@ -25,7 +25,15 @@ const signIn = async (username, password) => {
       password
     },
   }).then(({ data }) => {
-    if (!data.value) {
+    if (data.value === null) {
+      $q.notify({
+        type: 'negative',
+        message: 'Credenciais inválidas!',
+        position: 'top-right'
+      });
+      return;
+    }
+    if(data.value === undefined){
       $q.notify({
         type: 'negative',
         message: 'Campos vazios!',
@@ -33,19 +41,10 @@ const signIn = async (username, password) => {
       });
       return;
     }
-    if (data.value.loginUser) {
-      store.$patch({
-        userId: data.value.loginUser.id
-      });
-      router.back();
-    } 
-    else {
-      $q.notify({
-        type: 'negative',
-        message: 'Credenciais inválidas!',
-        position: 'top-right'
-      });
-    }
+    store.$patch({
+      userId: data.value.loginUser.id
+    });
+    router.back();
   });
 };
 </script>

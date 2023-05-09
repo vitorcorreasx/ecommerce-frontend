@@ -1,12 +1,14 @@
 <script setup>
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 
-const cep = ref('');
-const neighborhood = ref('');
-const street = ref('');
-const houseNumber = ref('');
-const name = ref('');
-const phone = ref('');
+const adressInfo = reactive({
+  cep: ref(''),
+  neighborhood: ref(''),
+  street: ref(''),
+  houseNumber: ref(''),
+  name: ref(''),
+  phone: ref(''),
+});
 
 const searchCep = (cep) => {
   const url = `https://viacep.com.br/ws/${cep}/json/`;
@@ -14,8 +16,8 @@ const searchCep = (cep) => {
   request.open('GET', url);
   request.onload = () => {
     const res = JSON.parse(request.response);
-    street.value = res.logradouro;
-    neighborhood.value = res.bairro;
+    adressInfo.street = res.logradouro;
+    adressInfo.neighborhood = res.bairro;
   };
   request.send();
 };
@@ -28,13 +30,13 @@ const searchCep = (cep) => {
       <span class="text-h5 q-mb-md">Contato</span>
       <div class="row q-mb-xl">
         <q-input
-          v-model="name"
+          v-model="adressInfo.name"
           outlined
           label="Nome"
           class="input"
         />
         <q-input
-          v-model="phone"
+          v-model="adressInfo.phone"
           outlined
           label="Telefone"
           class="input"
@@ -46,29 +48,29 @@ const searchCep = (cep) => {
       <span class="text-h5 q-mb-md">Meu endereço</span>
       <div class="row row q-mb-xl">
         <q-input
-          v-model="cep"
+          v-model="adressInfo.cep"
           outlined
           label="CEP"
           class="input"
-          @change="searchCep(cep)"
+          @change="searchCep(adressInfo.cep)"
           mask="#####-###"
         />
         <q-input
-          v-model="street"
+          v-model="adressInfo.street"
           outlined
           label="Rua"
           class="input"
-          :model-value="street"
+          :model-value="adressInfo.street"
         />
         <q-input
-          v-model="neighborhood"
+          v-model="adressInfo.neighborhood"
           outlined
           label="Bairro"
           class="input"
-          :model-value="neighborhood"
+          :model-value="adressInfo.neighborhood"
         />
         <q-input
-          v-model="houseNumber"
+          v-model="adressInfo.houseNumber"
           outlined
           label="Número"
           class="input"

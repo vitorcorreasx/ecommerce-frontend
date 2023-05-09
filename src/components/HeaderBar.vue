@@ -3,6 +3,13 @@ import router from '../routes';
 import {useUserStore} from '../store/';
 
 const userId = useUserStore();
+
+const userProfile = () => {
+  if (!userId.loggedId) {
+    router.push({ name: 'Login' });
+  }
+};
+
 const logout = () => {
   userId.$reset();
   router.push({ name: 'Login' });

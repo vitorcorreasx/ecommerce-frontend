@@ -39,15 +39,10 @@ const signUp = (username, password) => {
           message: 'Cadastrado com sucesso',
           position: 'top-right'
         });
+        return;
       }
     });
-  } else {
-    $q.notify({
-      type: 'negative',
-      message: 'Campos vazios!',
-      position: 'top-right'
-    });
-  }
+  } 
 };
 </script>
 
