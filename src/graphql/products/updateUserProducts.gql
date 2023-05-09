@@ -1,5 +1,5 @@
-mutation UpdateUserProducts($userId: ID!, $input: [ProductCart]!) {
-  updateUserProducts(userId: $userId, input: $input) {
+mutation UpdateUserProducts($userStore: ID!, $input: [ProductCart]!) {
+  updateUserProducts(userStore: $userStore, input: $input) {
     products {
       id
       amount

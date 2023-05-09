@@ -41,7 +41,7 @@ const signIn = async (username, password) => {
       return;
     }
     store.$patch({
-      userId: data.value.loginUser.id
+      userStore: data.value.loginUser.id
     });
     router.back();
   });

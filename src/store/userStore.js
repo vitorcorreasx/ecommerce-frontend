@@ -1,19 +1,19 @@
 import { defineStore } from 'pinia';
 
-export const useUserStore = defineStore('userId', {
+export const useUserStore = defineStore('userStore', {
   state: () => {
     return {
-      userId: null
+      userStore: null
     };
   },
   actions: {
     reset(state) {
-      state.userId = null;
+      state.userStore = null;
     }
   },
   getters: {
     loggedId(state) {
-      return state.userId;
+      return state.userStore;
     }
   },
   persist: {

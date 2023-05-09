@@ -2,16 +2,16 @@
 import router from '../routes';
 import {useUserStore} from '../store/';
 
-const userId = useUserStore();
+const userStore = useUserStore();
 
 const userProfile = () => {
-  if (!userId.loggedId) {
+  if (!userStore.loggedId) {
     router.push({ name: 'Login' });
   }
 };
 
 const logout = () => {
-  userId.$reset();
+  userStore.$reset();
   router.push({ name: 'Login' });
 };
 </script>

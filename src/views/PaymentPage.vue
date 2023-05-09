@@ -4,10 +4,10 @@ import router from '../routes';
 import { useUserStore } from '../store';
 import PaymentStepper from '../components/paymentSteps/PaymentStepper.vue';
 
-const userId = useUserStore();
+const userStore = useUserStore();
 
 onMounted(() => {
-  if (!userId.loggedId) {
+  if (!userStore.loggedId) {
     return router.push({ name: 'Login' });
   }
 });

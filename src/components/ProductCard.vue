@@ -5,7 +5,7 @@ import addUserProduct from '../graphql/products/addUserProduct.gql';
 import router from '../routes';
 import { useUserStore, useCartStore} from '../store';
 
-const userId = useUserStore();
+const userStore = useUserStore();
 const cartStore = useCartStore();
 
 const addProduct = (product) => {
@@ -13,7 +13,7 @@ const addProduct = (product) => {
     refetchTags: ['query'],
   }); 
   execute({
-    userId: userId.loggedId,
+    userStore: userStore.loggedId,
     input: {
       id: product.id,
       amount: 1,
