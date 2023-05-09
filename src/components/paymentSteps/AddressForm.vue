@@ -1,13 +1,13 @@
 <script setup>
-import { reactive, ref } from 'vue';
+import { reactive } from 'vue';
 
 const adressInfo = reactive({
-  cep: ref(''),
-  neighborhood: ref(''),
-  street: ref(''),
-  houseNumber: ref(''),
-  name: ref(''),
-  phone: ref(''),
+  cep: '',
+  neighborhood: '',
+  street: '',
+  houseNumber: '',
+  name: '',
+  phone: '',
 });
 
 const searchCep = (cep) => {

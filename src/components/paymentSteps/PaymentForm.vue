@@ -7,11 +7,11 @@ const userCart = useCartStore();
 
 const tab = ref('card');
 const clientInfo = reactive({
-  cardNumber: ref(''),
-  cpf: ref(''),
-  name: ref(''),
-  valiteDate: ref(''),
-  cvv: ref('')
+  cardNumber: '',
+  cpf: '',
+  name: '',
+  valiteDate: '',
+  cvv: ''
 });
 
 </script>
