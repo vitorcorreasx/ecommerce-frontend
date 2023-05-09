@@ -22,7 +22,6 @@ const addProduct = (product) => {
       total: product.price
     }
   }).then(({ data }) => {
-    console.log(data);
     cartStore.cart = data.addUserProduct;
   });
   router.push({ name: 'CartPage'});
