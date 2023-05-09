@@ -19,20 +19,21 @@ const logout = () => {
 <template>
   <q-layout
     class="container"
-    view="lHh lpr lFf"
+    view="hHh Lpr fFf"
     container
   >
     <q-header
       class="bg-brown-10 row justify-between"
       elevated
     >
-      <q-btn
-        flat
-        round
-        dense
-        label="LOGO"
+      <q-avatar
         class="q-ml-xl"
-      />
+        size="2.5rem"
+      >
+        <q-img
+          src="./logo.png"
+        />
+      </q-avatar>
 
       <q-toolbar class="navbar text-white row justify-between">
         <div class="row-button">
