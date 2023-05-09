@@ -3,7 +3,7 @@ import { reactive, ref } from 'vue';
 
 import { useCartStore } from '../../store';
 
-const userCart = useCartStore();
+const cartStore = useCartStore();
 
 const tab = ref('card');
 const clientInfo = reactive({
@@ -19,7 +19,7 @@ const clientInfo = reactive({
 <template>
   <div class="container row q-pl-xl justify-between">
     <div class="column">
-      <span class="text-h5">Valor total do pedido: R$ {{ userCart.getTotalPrice }}</span>
+      <span class="text-h5">Valor total do pedido: R$ {{ cartStore.getTotalPrice }}</span>
 
       <div class="table q-mt-xl">
         <q-card>
