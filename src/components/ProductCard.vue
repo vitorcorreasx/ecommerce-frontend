@@ -15,7 +15,7 @@ const addProduct = (product) => {
   execute({
     userId: tokenUser.loggedId,
     input: {
-      id: product.id,
+      productId: product.id,
       amount: 1,
       title: product.title,
       price: product.price,

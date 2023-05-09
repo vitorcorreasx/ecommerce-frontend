@@ -1,4 +1,4 @@
-mutation addUserProduct($userId: ID!, $input: [Cart]!) {
+mutation addUserProduct($userId: ID!, $input: Cart!) {
   addUserProduct(userId: $userId, input: $input) {
     products {
       amount

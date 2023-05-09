@@ -1,88 +1,24 @@
-<!-- eslint-disable vue/no-side-effects-in-computed-properties -->
-<!-- eslint-disable vue/return-in-computed-property -->
 <script setup>
-import { ref, computed, reactive} from 'vue';
-import { useQuasar } from 'quasar';
-import router from '../routes';
-import { useQuery, useMutation } from 'villus';
-import getUserProducts from '../graphql/products/getUserProducts.gql';
-import updateUserProducts from '../graphql/products/updateUserProducts.gql';
+import { ref, watch } from 'vue';
+import { useCartStore } from '../store';
 
-import { useUserStore, useCartStore } from '../store';
-
-const $q = useQuasar();
 const cartStore = useCartStore();
-const tokenUser = useUserStore();
+const selectedCart = ref();
+watch(selectedCart, () => cartStore.getTotal(selectedCart.value));
 
-useQuery({
-  query: getUserProducts,
-  variables: {
-    userId: tokenUser.loggedId
+defineProps({
+  columns: {
+    type: Object,
+    default(){
+      return '';
+    }
   },
-  tags: ['query']
-}).then(({data}) => {
-  cartStore.cart = data.value.userProducts;
-});
-
-const columns = ref([
-  { name: 'title', required: true, label: 'Produto', align: 'left', field: 'title' },
-  { name: 'price', align: 'center', label: 'Preço', field: 'price' },
-  { name: 'amount', align: 'center', label: 'Quantidade', field: 'amount' },
-  { name: 'total', align: 'center', label: 'Total', field: 'total' },
-]);
-
-const saveCart = () => {
-  const { execute } = useMutation(updateUserProducts, {
-    refetchTags: ['query'],
-  }); 
-  execute({
-    userId: tokenUser.loggedId,
-    input: cartStore.cart.products
-  });
-};
-
-const addCart = async (productId) => {
-  const findProduct = cartStore.cart.products.findIndex(e => e.id == productId);
-  const item = cartStore.cart.products[findProduct];
-  item.amount++;
-  item.total = item.amount * item.price;
-};
-
-const removeCart = async (productId) => {
-  const findProduct = cartStore.cart.products.findIndex(e => e.id == productId);
-  const item = cartStore.cart.products[findProduct];
-  if(item.amount > 0){
-    item.amount--;
+  data: {
+    type: Object,
+    default(){
+      return '';
+    }
   }
-  item.total = item.amount * item.price;
-};
-
-const finishCart = () => {
-  if (cartStore.getSelectedCart.length != 0) {
-    router.push({ name: 'Payment', params: { id: tokenUser.loggedId } });
-    return;
-  }
-  $q.notify({
-    type: 'warning',
-    message: 'Selecione algum item!',
-    position: 'top-right'
-  });
-};
-const getSelected = computed(() => {
-  const sum = reactive({
-    price: 0,
-    amount: 0
-  });
-
-  if (cartStore.getSelectedCart.length == 0) {
-    cartStore.cartTotal = 0;
-    return;
-  }
-  cartStore.getSelectedCart.forEach(e => {
-    sum.price = sum.price + e.price;
-    sum.amount = sum.amount + e.amount;
-    cartStore.cartTotal = (sum.price * sum.amount).toFixed(2);
-  });
 });
 </script>
 
@@ -91,7 +27,7 @@ const getSelected = computed(() => {
     class="q-pa-md "
   >
     <q-table
-      v-for="item in cartStore.cart"
+      v-for="item in data"
       :key="item"
       flat
       bordered
@@ -99,9 +35,8 @@ const getSelected = computed(() => {
       :rows="item"
       :columns="columns"
       row-key="title"
-      :selected-rows-label="getSelected"
       selection="multiple"
-      v-model:selected="cartStore.selectedCart"
+      v-model:selected="selectedCart"
       rows-per-page-label="Produtos por página"
     >
       <template #body-cell-amount="props">
@@ -109,33 +44,16 @@ const getSelected = computed(() => {
           <q-btn
             flat
             icon="add"
-            @click="addCart(props.row.id)"
+            @click="cartStore.incrementProduct(props.row.id)"
           />
           <span>{{ props.value }}</span>
           <q-btn
             flat
             icon="remove"
-            @click="removeCart(props.row.id)"
+            @click="cartStore.decrementProduct(props.row.id)"
           />
         </q-td>
       </template>
     </q-table>
-  </div>
-
-  <div class="column q-pa-md items-end">
-    <span class="q-mb-md text-h6">Total R$ {{ cartStore.getTotalCart }}</span>
-    <div>
-      <q-btn
-        color="brown-10"
-        label="Salvar carrinho"
-        @click="saveCart"
-      />
-      <q-btn
-        class="q-ml-md"
-        color="positive"
-        label="Finalizar compra"
-        @click="finishCart"
-      />
-    </div>
   </div>
 </template>

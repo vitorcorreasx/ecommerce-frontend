@@ -2,21 +2,41 @@ import { defineStore } from 'pinia';
 
 export const useCartStore = defineStore('userCart', {
   state: () => ({
-    selectedCart: [],
-    cartTotal: 0,
+    cartPriceTotal: 0,
     cart: [],
   }),
   actions: {
     reset(state) {
       state.selectedCart = [];
     },
+    getTotal(args) {
+      const totalPrices = args.map((e) => e.total);
+      const sum = totalPrices.reduce((a, b) => a + b, 0);
+      this.cartPriceTotal = sum || 0;
+      return this.cartPriceTotal;
+    },
+    incrementProduct(productId) {
+      const findProduct = this.cart.products.findIndex(e => e.id == productId);
+      const item = this.cart.products[findProduct];
+      item.amount++;
+      item.total = item.amount * item.price;
+    },
+    decrementProduct(productId){
+      const findProduct = this.cart.products.findIndex(e => e.id == productId);
+      const item = this.cart.products[findProduct];
+      if(item.amount ==  1){
+        this.cart.products.splice(findProduct, 1);
+      }
+      item.amount--;
+      item.total = item.amount * item.price;
+    }
   },
   getters: {
     getSelectedCart(state) {
       return state.selectedCart;
     },
-    getTotalCart(state) {
-      return state.cartTotal;
+    getTotalPrice(state) {
+      return state.cartPriceTotal;
     },
   },
 });
