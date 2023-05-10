@@ -13,7 +13,7 @@ const addProduct = (product) => {
     refetchTags: ['query'],
   }); 
   execute({
-    userStore: userStore.loggedId,
+    userId: userStore.loggedId,
     input: {
       id: product.id,
       amount: 1,

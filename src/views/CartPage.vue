@@ -29,7 +29,7 @@ onMounted(() => {
 useQuery({
   query: getUserProducts,
   variables: {
-    userStore: userStore.loggedId
+    userId: userStore.loggedId
   },
   tags: ['query']
 }).then(({data}) => {
@@ -41,7 +41,7 @@ const saveCart = () => {
     refetchTags: ['query'],
   }); 
   execute({
-    userStore: userStore.loggedId,
+    userId: userStore.loggedId,
     input: cartStore.cart.products
   });
 };

@@ -10,16 +10,18 @@ defineProps({
   columns: {
     type: Object,
     default(){
-      return '';
+      return {};
     }
   },
   data: {
     type: Object,
     default(){
-      return '';
+      return {};
     }
   }
 });
+
+
 </script>
 
 <template>

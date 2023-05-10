@@ -1,5 +1,5 @@
-query userProducts($userStore: ID!){
-  userProducts(userStore: $userStore) {
+query userProducts($userId: ID!){
+  userProducts(userId: $userId) {
     products {
       id
       title
