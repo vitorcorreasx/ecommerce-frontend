@@ -5,8 +5,9 @@ const selected = ref([]);
 const emit = defineEmits(['decrement', 'increment', 'selected']);
 
 watch(selected, () => {
+  console.log('ad');
   emit('selected', selected.value);
-});
+}, {deep: true});
 
 defineProps({
   columns: {
