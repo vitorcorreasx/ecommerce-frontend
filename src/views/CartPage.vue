@@ -8,7 +8,7 @@ import getUserProducts from '../graphql/products/getUserProducts.gql';
 import updateUserProducts from '../graphql/products/updateUserProducts.gql';
 
 import Header from '../components/HeaderBar.vue';
-import CartTable from '../components/CartTable.vue';
+import CartTable from '../components/ItemsTable.vue';
 
 const userStore = useUserStore();
 const cartStore = useCartStore();
