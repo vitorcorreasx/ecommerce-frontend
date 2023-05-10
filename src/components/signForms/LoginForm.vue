@@ -17,6 +17,13 @@ const showPassword = () => {
 };
 
 const signIn = async (username, password) => {
+  if(!username || !password){
+    return $q.notify({
+      type: 'negative',
+      message: 'Campos vazios!',
+      position: 'top-right'
+    });
+  }
   const store = useUserStore();
   await useQuery({
     query: login,
@@ -25,27 +32,18 @@ const signIn = async (username, password) => {
       password
     },
   }).then(({ data }) => {
-    if (!data.value) {
-      $q.notify({
-        type: 'negative',
-        message: 'Campos vazios!',
-        position: 'top-right'
-      });
-      return;
-    }
-    if (data.value.loginUser) {
-      store.$patch({
-        userId: data.value.loginUser.id
-      });
-      router.back();
-    } 
-    else {
+    if (data.value === null) {
       $q.notify({
         type: 'negative',
         message: 'Credenciais inválidas!',
         position: 'top-right'
       });
+      return;
     }
+    store.$patch({
+      userStore: data.value.loginUser.id
+    });
+    router.back();
   });
 };
 </script>

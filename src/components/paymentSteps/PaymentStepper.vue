@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from 'vue';
 import router from '../../routes';
-import verify from '../../assets/verify.png';
 import Address from './AddressForm.vue';
 import PaymentForm from './PaymentForm.vue';
 
@@ -45,7 +44,7 @@ const step = ref(1);
       >
         <div class="column">
           <q-img
-            :src="verify"
+            src="./verify.png"
             width="200px"
           />
           <span class="text-h5 q-mt-lg">Compra finalizada!</span>

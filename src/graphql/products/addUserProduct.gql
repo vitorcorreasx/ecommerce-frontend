@@ -1,8 +1,8 @@
-mutation addUserProduct($userId: ID!, $input: [Cart]!) {
+mutation addUserProduct($userId: ID!, $input: ProductCart!) {
   addUserProduct(userId: $userId, input: $input) {
     products {
-      amount
       id
+      amount
       price
       title
       total

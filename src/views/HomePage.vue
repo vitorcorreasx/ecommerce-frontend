@@ -1,11 +1,14 @@
 <script setup>
 import Header from '../components/HeaderBar.vue';
-import preview from '../assets/preview.jpg';
+
 </script>
 
 <template>
   <Header />
   <q-layout>
-    <q-img :src="preview" />
+    <q-img
+      height="100vh"
+      src="./preview.jpg"
+    />
   </q-layout>
 </template>

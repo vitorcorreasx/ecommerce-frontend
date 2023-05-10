@@ -1,23 +1,25 @@
 <script setup>
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 
 import { useCartStore } from '../../store';
 
-const userCart = useCartStore();
+const cartStore = useCartStore();
 
 const tab = ref('card');
-const cardNumber = ref('');
-const cpf = ref('');
-const name = ref('');
-const valiteDate = ref('');
-const cvv = ref('');
+const clientInfo = reactive({
+  cardNumber: '',
+  cpf: '',
+  name: '',
+  valiteDate: '',
+  cvv: ''
+});
 
 </script>
 
 <template>
   <div class="container row q-pl-xl justify-between">
     <div class="column">
-      <span class="text-h5">Valor total do pedido: R$ {{ userCart.getTotalCart }}</span>
+      <span class="text-h5">Valor total do pedido: R$ {{ cartStore.getTotalPrice }}</span>
 
       <div class="table q-mt-xl">
         <q-card>
@@ -55,7 +57,7 @@ const cvv = ref('');
               class="row"
             >
               <q-input
-                v-model="cardNumber"
+                v-model="clientInfo.cardNumber"
                 outlined
                 class="col-6 q-mr-md q-mb-md"
                 label="Número do Cartão"
@@ -63,7 +65,7 @@ const cvv = ref('');
                 :rules="[val => val && val.length > 0 || 'Digite um número de cartão válido']"
               />
               <q-input
-                v-model="cvv"
+                v-model="clientInfo.cvv"
                 outlined
                 class="col-2 q-mr-md q-mb-md"
                 label="CVC"
@@ -71,7 +73,7 @@ const cvv = ref('');
                 :rules="[val => val && val.length > 0 || 'Digite o CVC conforme cartão']"
               />
               <q-input
-                v-model="valiteDate"
+                v-model="clientInfo.valiteDate"
                 outlined
                 class="q-mb-md"
                 label="Validade (MM/AAAA)"
@@ -79,14 +81,14 @@ const cvv = ref('');
                 :rules="[val => val && val.length > 0 || 'Digite a validade conforme cartão']"
               />
               <q-input
-                v-model="name"
+                v-model="clientInfo.name"
                 outlined
                 class="col-6 q-mr-md "
                 label="Nome Títular"
                 :rules="[val => val && val.length > 0 || 'Digite o nome conforme cartão']"
               />
               <q-input
-                v-model="cpf"
+                v-model="clientInfo.cpf"
                 outlined
                 class="col-5"
                 label="CPF"
