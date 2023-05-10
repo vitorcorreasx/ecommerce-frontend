@@ -18,7 +18,7 @@ const columns = [
   { name: 'title', required: true, label: 'Produto', align: 'left', field: 'title' },
   { name: 'price', align: 'center', label: 'Preço', field: 'price' },
   { name: 'amount', align: 'center', label: 'Quantidade', field: 'amount' },
-  { name: 'total', align: 'center', label: 'Total', field: 'total' },
+  { name: 'total', align: 'center', label: 'Total', field: 'total'},
 ];
 
 onMounted(() => {
@@ -63,8 +63,12 @@ const finishCart = () => {
 <template>
   <Header />
   <CartTable
+    title="Meu carrinho"
     :columns="columns"
     :data="cartStore.cart"
+    @increment="cartStore.incrementProduct"
+    @decrement="cartStore.decrementProduct"
+    @selected="cartStore.setTotal"
   />
   <div class="column q-pa-md items-end">
     <span class="q-mb-md text-h6">Total R$ {{ cartStore.getTotalPrice }}</span>

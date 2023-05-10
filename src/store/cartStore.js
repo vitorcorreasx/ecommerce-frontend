@@ -6,10 +6,7 @@ export const useCartStore = defineStore('cartStore', {
     cart: [],
   }),
   actions: {
-    reset(state) {
-      state.selectedCart = [];
-    },
-    getTotal(args) {
+    setTotal(args) {
       const totalPrices = args.map((e) => e.total);
       const sum = totalPrices.reduce((a, b) => a + b, 0);
       this.cartPriceTotal = sum || 0;
@@ -31,9 +28,6 @@ export const useCartStore = defineStore('cartStore', {
     }
   },
   getters: {
-    getSelectedCart(state) {
-      return state.selectedCart;
-    },
     getTotalPrice(state) {
       return state.cartPriceTotal;
     },
